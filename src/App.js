@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import TextField from './components/LoginPage/loginPage'; 
+import { Route, Switch } from 'react-router-dom'; 
+import LoginPage from './components/LoginPage/loginPage'; 
+import ProfilePage from './components/ProfilePage/profilePage';
 
 class App extends Component {
   render() {
     return (
-      <TextField label="Name" placeholder="Please enter your name" />
+      <Switch>
+        <Route exact path="/profile" component={ProfilePage} />
+        <Route exact path="/" component={LoginPage} />
+      </Switch> 
     ); 
   }
 }
