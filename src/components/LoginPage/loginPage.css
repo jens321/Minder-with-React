@@ -18,3 +18,7 @@
     background-color: #B5C2CC; 
     z-index: -1
 }
+
+.row {
+    padding-top: 50px; 
+}
