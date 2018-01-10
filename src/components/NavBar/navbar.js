@@ -11,11 +11,26 @@ class NavBar extends Component {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav"> 
-                        <NavLink navLink="/discovery" navName="Discovery" navIcon="oi oi-magnifying-glass" />
-                        <NavLink navLink="/chat" navName="Chat" navIcon="oi oi-chat" />
-                        <NavLink navLink="/profile" navName="Profile" navIcon="oi oi-person" />
-                        <NavLink navLink="/connect" navName="Connect" navIcon="oi oi-puzzle-piece" />
-                        <NavLink navLink="/logout" navName="Logout" navIcon="oi oi-account-logout" />
+                        <NavLink active={this.props.page === "discovery"} 
+                                 navLink="/discovery" 
+                                 navName="Discovery" 
+                                 navIcon="oi oi-magnifying-glass" />
+                        <NavLink active={this.props.page === "chat"}
+                                 navLink="/chat" 
+                                 navName="Chat" 
+                                 navIcon="oi oi-chat" />
+                        <NavLink active={this.props.page === "profile"}
+                                 navLink="/profile" 
+                                 navName="Profile" 
+                                 navIcon="oi oi-person" />
+                        <NavLink active={this.props.page === "connect"}
+                                 navLink="/connect" 
+                                 navName="Connect" 
+                                 navIcon="oi oi-puzzle-piece" />
+                        <NavLink active={this.props.page === "logout"}
+                                 navLink="/logout" 
+                                 navName="Logout" 
+                                 navIcon="oi oi-account-logout" />
                     </ul>
                 </div> 
             </nav> 

@@ -4,7 +4,7 @@ import NavBar from '../NavBar/navbar';
 class ProfilePage extends Component {
     render() {
         return (
-            <NavBar page="profile"/>
+            <NavBar page="connect"/>
         );
     }
 }
