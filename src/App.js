@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import TextField from './components/LoginPage/loginPage'; 
 
 class App extends Component {
   render() {
     return (
-      <h1>Hello World!</h1> 
+      <TextField label="Name" placeholder="Please enter your name" />
     ); 
   }
 }
