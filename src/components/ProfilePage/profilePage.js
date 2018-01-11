@@ -1,10 +1,22 @@
 import React, { Component } from 'react'; 
 import NavBar from '../NavBar/navbar';
+import ProfileCard from '../ProfileCard/profileCard'; 
+import './profilePage.css'; 
 
 class ProfilePage extends Component {
     render() {
         return (
-            <NavBar page="profile"/>
+            <div> 
+                <NavBar page="profile"/>
+                <div className="container">
+                    <div className="row">
+                        <div className="offset-md-2 col-md-8">
+                            <img src={require('../../images/profile.jpg')} alt="profile" />
+                            <ProfileCard /> 
+                        </div> 
+                    </div> 
+                </div> 
+            </div> 
         );
     }
 }
