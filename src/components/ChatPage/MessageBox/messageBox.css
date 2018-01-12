@@ -1,0 +1,7 @@
+.message-area {
+    height: 300px; 
+    overflow: auto;
+    border: 2px solid #efefef;
+    border-radius: 5px;   
+    margin-bottom: 10px; 
+}
