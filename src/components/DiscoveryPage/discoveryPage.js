@@ -1,10 +1,16 @@
 import React, { Component } from 'react'; 
 import NavBar from '../NavBar/navbar';
+import SearchBar from './SearchBar/searchBar'; 
 
 class ProfilePage extends Component {
     render() {
         return (
-            <NavBar page="discovery"/>
+            <div>
+                <NavBar page="discovery"/>
+                <div className="container">
+                    <SearchBar />
+                </div>
+            </div> 
         );
     }
 }

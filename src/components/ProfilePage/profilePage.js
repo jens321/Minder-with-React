@@ -11,7 +11,7 @@ class ProfilePage extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="offset-md-2 col-md-8">
-                            <img src={require('../../images/profile.jpg')} alt="profile" />
+                            <img src={'/images/profile.jpg'} alt="profile" />
                             <ProfileCard /> 
                         </div> 
                     </div> 
