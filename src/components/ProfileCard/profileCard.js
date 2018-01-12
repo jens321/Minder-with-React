@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
 import ProfileCardItem from './ProfileCardItem/profileCardItem'; 
 import ProfileCardHeader from './ProfileCardHeader/profileCardHeader'; 
+import Button from '../Button/button'; 
 import './profileCard.css';
 
 class ProfileCard extends Component {
@@ -21,7 +22,7 @@ class ProfileCard extends Component {
                     <ProfileCardItem title="Location" value=""/>
                 </ul> 
                 <div className="card-body">
-                    <button className="btn btn-primary">Edit Profile</button>
+                    <Button text="Edit Profile"/>
                 </div> 
             </div> 
         ); 

@@ -1,0 +1,8 @@
+.card-body img {
+    margin: 0px;
+    width: 150px;  
+}
+
+img + h3 {
+    margin-top: 10px; 
+}
