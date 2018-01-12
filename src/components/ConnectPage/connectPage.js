@@ -1,7 +1,7 @@
 import React, { Component } from 'react'; 
 import NavBar from '../NavBar/navbar';
 
-class ProfilePage extends Component {
+class ConnectPage extends Component {
     render() {
         return (
             <NavBar page="connect"/>
@@ -9,4 +9,4 @@ class ProfilePage extends Component {
     }
 }
 
-export default ProfilePage; 
+export default ConnectPage; 
