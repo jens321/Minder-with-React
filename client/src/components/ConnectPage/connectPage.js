@@ -5,7 +5,6 @@ import PendingRequest from './PendingRequest/pendingRequest';
 
 class ConnectPage extends Component {
     render() {
-
         return (
             <div> 
                 <NavBar page="connect"/>
