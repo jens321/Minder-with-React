@@ -25,7 +25,7 @@ class SignupForm extends Component {
             password: this.state.password
         })
         .then(function(response) {
-            console.log(response); 
+            window.location.replace('/profile'); 
         })
         .catch(function(error) {
             console.log(error); 

@@ -4,6 +4,7 @@ import ProfileCard from '../ProfileCard/profileCard';
 import './profilePage.css'; 
 
 class ProfilePage extends Component {
+
     render() {
         return (
             <div> 
