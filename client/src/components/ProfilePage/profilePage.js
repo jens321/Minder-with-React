@@ -6,6 +6,7 @@ import './profilePage.css';
 class ProfilePage extends Component {
 
     render() {
+        console.log(this.props.location.state); 
         return (
             <div> 
                 <NavBar page="profile"/>

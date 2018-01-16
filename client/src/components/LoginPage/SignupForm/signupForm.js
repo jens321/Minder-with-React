@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import TextField from '../../textfield/textfield'; 
 import Button from '../../Button/button';
 import axios from 'axios'; 
@@ -9,7 +10,8 @@ class SignupForm extends Component {
         this.state = {
             name: "",
             email: "",
-            password: ""
+            password: "",
+            redirectToProfile: false
         }
 
         this.handleSignup = this.handleSignup.bind(this); 
@@ -19,13 +21,19 @@ class SignupForm extends Component {
     }
 
     handleSignup() {
+        let that = this; 
         axios.post('/api/signup', {
             name: this.state.name,
             email: this.state.email,
             password: this.state.password
         })
         .then(function(response) {
-            window.location.replace('/profile'); 
+            console.log(response); 
+            that.setState({
+                name: response.data.name,
+                email: response.data.email,
+                redirectToProfile: true 
+            }); 
         })
         .catch(function(error) {
             console.log(error); 
@@ -51,15 +59,19 @@ class SignupForm extends Component {
     }
 
     render() {
-        return (
-            <form id="signup-form">
-                <h2>Signup</h2> 
-                <TextField label="Name" text={this.state.name} placeholder="Please enter your name" type="text" onDataChange={this.onNameChange}/>
-                <TextField label="Email" text={this.state.email} placeholder="Please enter your email" type="email" onDataChange={this.onEmailChange}/> 
-                <TextField label="Password" text={this.state.password} placeholder="Please enter your password" type="password" onDataChange={this.onPasswordChange}/> 
-                <Button text="Submit" handler={this.handleSignup}/> 
-            </form> 
-        );
+        if (!this.state.redirectToProfile) {
+            return (
+                <form id="signup-form">
+                    <h2>Signup</h2> 
+                    <TextField label="Name" text={this.state.name} placeholder="Please enter your name" type="text" onDataChange={this.onNameChange}/>
+                    <TextField label="Email" text={this.state.email} placeholder="Please enter your email" type="email" onDataChange={this.onEmailChange}/> 
+                    <TextField label="Password" text={this.state.password} placeholder="Please enter your password" type="password" onDataChange={this.onPasswordChange}/> 
+                    <Button text="Submit" handler={this.handleSignup}/> 
+                </form> 
+            );
+        } else {
+            return <Redirect to={{ pathname: '/profile', state: this.state }} />; 
+        }
     }
 }
 
