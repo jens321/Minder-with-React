@@ -11,32 +11,45 @@ class SignupForm extends Component {
             name: "",
             email: "",
             password: "",
-            redirectToProfile: false
+            redirectToProfile: false,
+            error: ""
         }
 
         this.handleSignup = this.handleSignup.bind(this); 
+        this.handleSignupError = this.handleSignupError.bind(this); 
         this.onNameChange = this.onNameChange.bind(this);
         this.onEmailChange = this.onEmailChange.bind(this);
         this.onPasswordChange = this.onPasswordChange.bind(this); 
     }
 
+    handleSignupError(message) {
+        this.setState({ error: message }); 
+    }
+
     handleSignup() {
         let that = this; 
-        axios.post('/api/signup', {
+        axios.post('/ap/signup', {
             name: this.state.name,
             email: this.state.email,
             password: this.state.password
         })
         .then(function(response) {
-            console.log(response); 
-            that.setState({
-                name: response.data.name,
-                email: response.data.email,
-                redirectToProfile: true 
-            }); 
+            if (response.status === 200) {
+                console.log(response); 
+                that.setState({
+                    name: response.data.name,
+                    email: response.data.email,
+                    redirectToProfile: true 
+                }); 
+                // update the redux store 
+                that.props.signup(response.data);
+            } else {
+                this.handleSignupError("Sorry, something went wrong during registration."); 
+            }
         })
         .catch(function(error) {
-            console.log(error); 
+            console.log(error);
+            that.handleSignupError("Sorry, something went wrong during registration."); 
         }); 
     }
 
@@ -66,7 +79,8 @@ class SignupForm extends Component {
                     <TextField label="Name" text={this.state.name} placeholder="Please enter your name" type="text" onDataChange={this.onNameChange}/>
                     <TextField label="Email" text={this.state.email} placeholder="Please enter your email" type="email" onDataChange={this.onEmailChange}/> 
                     <TextField label="Password" text={this.state.password} placeholder="Please enter your password" type="password" onDataChange={this.onPasswordChange}/> 
-                    <Button text="Submit" handler={this.handleSignup}/> 
+                    <Button text="Submit" handler={this.handleSignup}/><br /><br />
+                    { this.state.error ? <div className="alert alert-danger">{this.state.error}</div> : false }
                 </form> 
             );
         } else {

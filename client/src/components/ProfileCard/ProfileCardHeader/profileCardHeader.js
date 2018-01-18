@@ -9,7 +9,7 @@ class ProfileCardHeader extends Component {
         return (
             <div className="card-body">
                 { url && <img src={url} alt="profile" /> }
-                <h3 className="card-title">{this.props.title ? this.props.title : "No Name"}</h3>
+                <h3 className="card-title">{this.props.name ? this.props.name : "No Name"}</h3>
                 <p className="card-text">{this.props.description ? this.props.description : <span className="item">You did not specify a description yet.</span>}</p>
                 { buttonText && <Button text={buttonText} />} 
             </div>

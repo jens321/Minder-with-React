@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import NavBar from '../NavBar/navbar';
-import ProfileCard from '../ProfileCard/profileCard'; 
+import ProfileCardContainer from '../ProfileCard/profileCardContainer'; 
 import './profilePage.css'; 
 
 class ProfilePage extends Component {
@@ -14,7 +14,7 @@ class ProfilePage extends Component {
                     <div className="row">
                         <div className="offset-md-2 col-md-8">
                             <img src={'/images/profile.jpg'} alt="profile" />
-                            <ProfileCard /> 
+                            <ProfileCardContainer /> 
                         </div> 
                     </div> 
                 </div> 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import './loginPage.css'; 
-import SignupForm from './SignupForm/signupForm'; 
+import SignupFormContainer from './SignupForm/signupFormContainer'; 
 import LoginForm from './LoginForm/loginForm'; 
 
 class LoginPage extends Component {
@@ -10,7 +10,7 @@ class LoginPage extends Component {
                 <div className="pseudo"></div> 
                 <div className="row">
                     <div className="offset-md-3 col-md-6">
-                        <SignupForm />
+                        <SignupFormContainer />
                         <hr /> 
                         <LoginForm />
                     </div>

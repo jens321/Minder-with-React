@@ -14,9 +14,9 @@ class ProfileCard extends Component {
     render() {
         return (
             <div className="card">
-                <ProfileCardHeader title={this.props.title} description={this.props.description} src={this.props.src} /> 
+                <ProfileCardHeader name={this.props.name} description={this.props.description} src={this.props.src} /> 
                 <ul className="list-group list-group-flush">
-                    <ProfileCardItem title="Email" value=""/>
+                    <ProfileCardItem title="Email" value={this.props.email}/>
                     <ProfileCardItem title="Tags" value=""/>
                     <ProfileCardItem title="Education" value=""/>
                     <ProfileCardItem title="Location" value=""/>
