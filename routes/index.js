@@ -6,7 +6,6 @@ let Chat = require('../models/chat.js');
 let auth = require('../utils/auth'); 
 
 router.post('/api/signup', function(req, res, next) {
-  console.log('route hit'); 
   let hashedPassword = User.hashPassword(req.body.password);
 
   let user = new User({
@@ -32,5 +31,16 @@ router.post('/api/signup', function(req, res, next) {
   });
 
 }); 
+
+router.patch('/api/user/:id', function(req, res, next) {
+  body = req.body
+  delete body.editable; 
+  console.log(body)
+  User.findByIdAndUpdate(mongoose.Types.ObjectId(req.params.id), body, {new: true}, function(err, newUser) {
+    if (err) throw err; 
+    delete newUser.password; 
+    res.status(200).json(newUser); 
+  })
+});
 
 module.exports = router;

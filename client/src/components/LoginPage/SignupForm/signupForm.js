@@ -8,9 +8,9 @@ class SignupForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
-            email: "",
-            password: "",
+            name: "Jens Tuyls",
+            email: "jens.tuyls@icloud.com",
+            password: "test",
             redirectToProfile: false,
             error: ""
         }
@@ -76,7 +76,7 @@ class SignupForm extends Component {
             return (
                 <form id="signup-form">
                     <h2>Signup</h2> 
-                    <TextField label="Name" text={this.state.name} placeholder="Please enter your name" type="text" onDataChange={this.onNameChange}/>
+                    <TextField label="Name" text={this.state.name} placeholder="Please enter your name" type="text" onDataChange={this.onNameChange} />
                     <TextField label="Email" text={this.state.email} placeholder="Please enter your email" type="email" onDataChange={this.onEmailChange}/> 
                     <TextField label="Password" text={this.state.password} placeholder="Please enter your password" type="password" onDataChange={this.onPasswordChange}/> 
                     <Button text="Submit" handler={this.handleSignup}/><br /><br />
