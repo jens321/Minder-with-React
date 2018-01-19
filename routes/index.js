@@ -26,7 +26,8 @@ router.post('/api/signup', function(req, res, next) {
   });
 
   user.save(function(err, user) {
-    if (err) throw err; 
+    if (err) throw err;  
+    delete user.password;
     res.send(user); 
   });
 

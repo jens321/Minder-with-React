@@ -28,14 +28,14 @@ class SignupForm extends Component {
 
     handleSignup() {
         let that = this; 
-        axios.post('/ap/signup', {
+        axios.post('/api/signup', {
             name: this.state.name,
             email: this.state.email,
             password: this.state.password
         })
         .then(function(response) {
             if (response.status === 200) {
-                console.log(response); 
+                // set the component state 
                 that.setState({
                     name: response.data.name,
                     email: response.data.email,
