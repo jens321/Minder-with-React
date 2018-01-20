@@ -20,7 +20,9 @@ class ProfileCardHeader extends Component {
         return (
             <div className="card-body">
                 { url && <img src={url} alt="profile" /> }
+                { this.props.isEditable ? <h3 className="card-title">Name</h3> : false }
                 { bodyHeader }
+                { this.props.isEditable ? <p className="card-text" style={{marginBottom:'0px', marginTop:'10px'}}><b>Description</b></p> : false }
                 { bodyDescription }
                 { buttonText && <Button text={buttonText} />} 
             </div>

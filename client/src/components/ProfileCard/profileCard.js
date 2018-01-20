@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ProfileCardItem from './ProfileCardItem/profileCardItem'; 
 import ProfileCardHeader from './ProfileCardHeader/profileCardHeader'; 
 import Button from '../Button/button'; 
+import TagList from '../TagList/tagList'; 
 import axios from 'axios'; 
 import './profileCard.css';
 
@@ -14,7 +15,8 @@ class ProfileCard extends Component {
             description: "",
             src: "",
             email: "",
-            tags: "",
+            tags: this.props.tags ? this.props.tags : [],
+            currentTag: "",
             education: "",
             location: ""
         };
@@ -25,6 +27,8 @@ class ProfileCard extends Component {
         this.onDescriptionChange = this.onDescriptionChange.bind(this);  
         this.onEmailChange = this.onEmailChange.bind(this);
         this.onTagsChange = this.onTagsChange.bind(this);
+        this.handleTagChange = this.handleTagChange.bind(this);
+        this.handleTagKeyUp = this.handleTagKeyUp.bind(this); 
         this.onEducationChange = this.onEducationChange.bind(this);
         this.onLocationChange = this.onLocationChange.bind(this); 
     }
@@ -104,6 +108,21 @@ class ProfileCard extends Component {
             location: e.target.value
         }); 
     }
+
+    handleTagChange(e) {
+        this.setState({
+            currentTag: e.target.value
+        }); 
+    }
+
+    handleTagKeyUp(e) {
+        if (e.keyCode === 13) {
+            this.setState({
+                tags: this.state.tags.concat([this.state.currentTag]),
+                currentTag: ""
+            }); 
+        }
+    }
     
     render() {
         return (
@@ -114,7 +133,7 @@ class ProfileCard extends Component {
                         <ProfileCardItem title="Email" data={this.state.email} isEditable={this.state.editable} onDataChange={this.onEmailChange}/> 
                     </li>
                     <li className="list-group-item">
-                        <ProfileCardItem title="Tags" data={this.state.tags} isEditable={this.state.editable} onDataChange={this.onTagsChange}/>
+                        <TagList title="Tags" isEditable={this.state.editable} tags={this.state.tags} currentTag={this.state.currentTag} onTagChange={this.handleTagChange} onTagKeyUp={this.handleTagKeyUp}/>
                     </li>
                     <li className="list-group-item">
                         <ProfileCardItem title="Education" data={this.state.education} isEditable={this.state.editable} onDataChange={this.onEducationChange}/>
