@@ -35,7 +35,6 @@ router.post('/api/signup', function(req, res, next) {
 router.patch('/api/user/:id', function(req, res, next) {
   body = req.body
   delete body.editable; 
-  console.log(body)
   User.findByIdAndUpdate(mongoose.Types.ObjectId(req.params.id), body, {new: true}, function(err, newUser) {
     if (err) throw err; 
     delete newUser.password; 

@@ -10,7 +10,6 @@ class ProfileCard extends Component {
     constructor(props) {
         super(props); 
         this.state = {
-            editable: false,
             name: "",
             description: "",
             src: "",
@@ -21,8 +20,7 @@ class ProfileCard extends Component {
             location: ""
         };
   
-        this.handleEditClick = this.handleEditClick.bind(this);
-        this.handleSaveClick = this.handleSaveClick.bind(this);
+        this.handleSave = this.handleSave.bind(this);
         this.onNameChange = this.onNameChange.bind(this);
         this.onDescriptionChange = this.onDescriptionChange.bind(this);  
         this.onEmailChange = this.onEmailChange.bind(this);
@@ -41,13 +39,7 @@ class ProfileCard extends Component {
         });
     }
 
-    handleEditClick() {
-        this.setState({
-            editable: true
-        }); 
-    }
-
-    handleSaveClick() {
+    handleSave() {
         let that = this; 
         axios.patch(`/api/user/${this.props.id}`, this.state)
             .then(function(response) {
@@ -68,9 +60,7 @@ class ProfileCard extends Component {
             .catch(function(error) {
                 console.log(error); 
             });
-        this.setState({
-            editable: false
-        });
+        this.props.handleSave(); 
     }
 
     onNameChange(e) {
@@ -127,25 +117,25 @@ class ProfileCard extends Component {
     render() {
         return (
             <div className="card">
-                <ProfileCardHeader name={this.state.name} description={this.state.description} src={this.state.src} isEditable={this.state.editable} onNameChange={this.onNameChange} onDescriptionChange={this.onDescriptionChange}/> 
+                <ProfileCardHeader name={this.state.name} description={this.state.description} src={this.state.src} isEditable={this.props.editable} onNameChange={this.onNameChange} onDescriptionChange={this.onDescriptionChange}/> 
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item">
-                        <ProfileCardItem title="Email" data={this.state.email} isEditable={this.state.editable} onDataChange={this.onEmailChange}/> 
+                        <ProfileCardItem title="Email" data={this.state.email} isEditable={this.props.editable} onDataChange={this.onEmailChange}/> 
                     </li>
                     <li className="list-group-item">
-                        <TagList title="Tags" isEditable={this.state.editable} tags={this.state.tags} currentTag={this.state.currentTag} onTagChange={this.handleTagChange} onTagKeyUp={this.handleTagKeyUp}/>
+                        <TagList title="Tags" isEditable={this.props.editable} tags={this.state.tags} currentTag={this.state.currentTag} onTagChange={this.handleTagChange} onTagKeyUp={this.handleTagKeyUp}/>
                     </li>
                     <li className="list-group-item">
-                        <ProfileCardItem title="Education" data={this.state.education} isEditable={this.state.editable} onDataChange={this.onEducationChange}/>
+                        <ProfileCardItem title="Education" data={this.state.education} isEditable={this.props.editable} onDataChange={this.onEducationChange}/>
                     </li>
                     <li className="list-group-item">
-                        <ProfileCardItem title="Location" data={this.state.location} isEditable={this.state.editable} onDataChange={this.onLocationChange}/>
+                        <ProfileCardItem title="Location" data={this.state.location} isEditable={this.props.editable} onDataChange={this.onLocationChange}/>
                     </li> 
                 </ul> 
                 <div className="card-body">
-                    { this.state.editable 
-                     ? <Button text="Save Changes" handler={this.handleSaveClick}/> 
-                     : <Button text="Edit Profile" handler={this.handleEditClick}/> }
+                    { this.props.editable 
+                     ? <Button text="Save Changes" handler={this.handleSave}/> 
+                     : <Button text="Edit Profile" handler={this.props.handleEdit}/> }
                 </div> 
             </div> 
         ); 
