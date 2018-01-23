@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import Button from '../../Button/button'; 
 import $ from 'jquery'; 
 import 'bootstrap'; 
+import './profileImage.css'; 
 
 class ProfileImage extends Component {
     constructor(props) {
         super(props);
 
-        this.width = 200;
+        this.width = 400;
         this.height = 0;
         this.streaming = false; 
 
@@ -108,7 +109,7 @@ class ProfileImage extends Component {
                         </div>
                     </div> 
                 </div> 
-                <img src="/images/profile.jpg" alt="profile" onClick={this.handleEditProfile}/>
+                <img id="profile-image" src="/images/profile.jpg" alt="profile" onClick={this.handleEditProfile}/>
             </div> 
         ); 
     }

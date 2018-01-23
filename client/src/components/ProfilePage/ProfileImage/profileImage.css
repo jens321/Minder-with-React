@@ -1,0 +1,24 @@
+.camera {
+    text-align: center; 
+}
+
+#canvas {
+    display: none; 
+}
+
+#video {
+    display: block;
+    margin: 10px auto; 
+}
+
+.output {
+    margin: 0px auto;  
+}
+
+#photo {
+    width: 400px; 
+}
+
+#profile-image {
+    width: 200px; 
+}
