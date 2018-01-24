@@ -1,7 +1,7 @@
 import React, { Component } from 'react'; 
 import NavBar from '../NavBar/navbar';
 import ProfileCardContainer from '../ProfileCard/profileCardContainer'; 
-import ProfileImage from './ProfileImage/profileImage';
+import ProfileImageContainer from './ProfileImage/profileImageContainer';
 import './profilePage.css'; 
 
 class ProfilePage extends Component {
@@ -42,7 +42,7 @@ class ProfilePage extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="offset-md-2 col-md-8">
-                            <ProfileImage editable={this.state.editable} />
+                            <ProfileImageContainer editable={this.state.editable} />
                             <ProfileCardContainer editable={this.state.editable} 
                                                   handleEdit={this.handleEdit} 
                                                   handleSave={this.handleSave} /> 

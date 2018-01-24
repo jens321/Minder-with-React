@@ -14,7 +14,7 @@ class Button extends Component {
 
     render() {
         return (
-            <button className={this.props.className ? this.props.className : "btn btn-primary"} onClick={this.handleClick}>{this.props.text}</button>
+            <button className={this.props.className ? this.props.className : "btn btn-primary"} onClick={this.handleClick} data-dismiss={this.props.dataDismiss} aria-label={this.props.ariaLabel}>{this.props.text}</button>
         );
     }
 }

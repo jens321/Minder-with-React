@@ -6,10 +6,6 @@ class NavBar extends Component {
         return (
             <nav className="navbar navbar-expand-lg navbar-light">
                 <a className="navbar-brand" href="/">Minder</a> 
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav"> 
                         <NavLink active={this.props.page === "discovery"} 
                                  navLink="/discovery" 
@@ -32,7 +28,6 @@ class NavBar extends Component {
                                  navName="Logout" 
                                  navIcon="oi oi-account-logout" />
                     </ul>
-                </div> 
             </nav> 
         );
     }

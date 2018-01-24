@@ -1,7 +1,6 @@
 import React, { Component } from 'react'; 
 import Button from '../../Button/button'; 
-import $ from 'jquery'; 
-import 'bootstrap'; 
+import axios from 'axios';  
 import './profileImage.css'; 
 
 class ProfileImage extends Component {
@@ -12,6 +11,13 @@ class ProfileImage extends Component {
         this.height = 0;
         this.streaming = false; 
 
+        this.state = {
+            savedImage: '/images/profile.jpg',
+            currentImage: '/images/profile.jpg'
+        }
+
+        this.handleSave = this.handleSave.bind(this); 
+        this.handleDiscardModal = this.handleDiscardModal.bind(this); 
         this.handleEditProfile = this.handleEditProfile.bind(this); 
         this.startup = this.startup.bind(this); 
         this.handleCanPlay = this.handleCanPlay.bind(this); 
@@ -21,8 +27,9 @@ class ProfileImage extends Component {
 
     handleEditProfile(e) {
         e.preventDefault();
-        this.startup(); 
-        $(this.modal).modal(); 
+        if (this.props.editable) {
+            this.startup(); 
+        } 
     }
 
     startup() {
@@ -31,6 +38,7 @@ class ProfileImage extends Component {
             .then(function(stream) {
                 that.video.srcObject = stream;
                 that.video.play(); 
+                that.mediaStream = stream.getTracks()[0]; 
             })
             .catch(function(err) {
                 console.log("An error occurred! " + err); 
@@ -64,6 +72,7 @@ class ProfileImage extends Component {
             context.drawImage(this.video, 0, 0, this.width, this.height); 
 
             let data = this.canvas.toDataURL('image/png'); 
+            this.setState({ currentImage: data.split(',')[1]})
             this.photo.setAttribute('src', data); 
         } else {
             this.clearPhoto(); 
@@ -79,6 +88,25 @@ class ProfileImage extends Component {
         this.photo.setAttribute('src', data); 
     }
 
+    handleDiscardModal() {
+        this.mediaStream.stop();  
+    }
+
+    handleSave() {
+        this.mediaStream.stop();
+        console.log('got here'); 
+        let that = this; 
+        axios.patch(`/api/user/${this.props.id}`, { image: this.state.currentImage })
+            .then(function(response) {
+                console.log(response.data.imageUrlPath); 
+                that.setState({ savedImage: response.data.imageUrlPath }); 
+                that.props.updateUser({ imageUrlPath: response.data.imageUrlPath });
+            })
+            .catch(function(err) {
+                console.log(err); 
+            });  
+    }
+
     render() {
         return(
             <div>
@@ -87,9 +115,7 @@ class ProfileImage extends Component {
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">Take your profile picture</h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                                <Button text={<span aria-hidden="true">&times;</span>} className="close" dataDismiss="modal" ariaLabel="Close" handler={this.handleDiscardModal} />
                             </div>
                             <div className="modal-body">
                                 <div className="camera">
@@ -103,13 +129,13 @@ class ProfileImage extends Component {
                                 </div> 
                             </div>
                             <div className="modal-footer">
-                                <Button text="Save changes" className="btn btn-primary" />
-                                <Button text="Close" className="btn btn-secondary" data-dismiss="modal" />
+                                <Button text="Save changes" className="btn btn-primary" dataDismiss="modal" handler={this.handleSave}/>
+                                <Button text="Close" className="btn btn-secondary" dataDismiss="modal" handler={this.handleDiscardModal}/>
                             </div> 
                         </div>
                     </div> 
                 </div> 
-                <img id="profile-image" src="/images/profile.jpg" alt="profile" onClick={this.handleEditProfile}/>
+                <img id="profile-image" src={this.state.savedImage} alt="profile" onClick={this.handleEditProfile} />
             </div> 
         ); 
     }
