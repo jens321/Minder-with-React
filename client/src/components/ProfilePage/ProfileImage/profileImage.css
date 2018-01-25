@@ -16,9 +16,26 @@
 }
 
 #photo {
-    width: 400px; 
+    width: 300px; 
 }
 
 #profile-image {
     width: 200px; 
+}
+
+.custom-modal {
+    position: absolute; 
+    width: 500px; 
+    margin: 0px auto; 
+    top: 30px; 
+    left: 0; 
+    right: 0; 
+    z-index: 999; 
+    background-color: white; 
+    border-radius: 20px; 
+    border: 1px solid #efefef; 
+}
+
+.custom-modal.hide {
+    display: none; 
 }

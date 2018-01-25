@@ -1,33 +1,29 @@
 import React, { Component } from 'react'; 
-import NavLink from './NavLink/navLink'; 
+import { Link } from 'react-router-dom'; 
+import './navbar.css'; 
 
 class NavBar extends Component {
     render () { 
         return (
             <nav className="navbar navbar-expand-lg navbar-light">
                 <a className="navbar-brand" href="/">Minder</a> 
-                    <ul className="navbar-nav"> 
-                        <NavLink active={this.props.page === "discovery"} 
-                                 navLink="/discovery" 
-                                 navName="Discovery" 
-                                 navIcon="oi oi-magnifying-glass" />
-                        <NavLink active={this.props.page === "chat"}
-                                 navLink="/chat" 
-                                 navName="Chat" 
-                                 navIcon="oi oi-chat" />
-                        <NavLink active={this.props.page === "profile"}
-                                 navLink="/profile" 
-                                 navName="Profile" 
-                                 navIcon="oi oi-person" />
-                        <NavLink active={this.props.page === "connect"}
-                                 navLink="/connect" 
-                                 navName="Connect" 
-                                 navIcon="oi oi-puzzle-piece" />
-                        <NavLink active={this.props.page === "logout"}
-                                 navLink="/logout" 
-                                 navName="Logout" 
-                                 navIcon="oi oi-account-logout" />
-                    </ul>
+                <ul className="navbar-nav">
+                    <li className={"nav-item" + (this.props.page === "discovery" ? " active" : "")}>
+                        <Link className="nav-link" to="/discovery">Discovery <span className="oi oi-magnifying-glass"></span></Link> 
+                    </li> 
+                    <li className={"nav-item" + (this.props.page === "chat" ? " active" : "")}>
+                        <Link className="nav-link" to="/chat">Chat <span className="oi oi-chat"></span></Link> 
+                    </li>
+                    <li className={"nav-item" + (this.props.page === "profile" ? " active" : "")}>
+                        <Link className="nav-link" to="/profile">Profile <span className="oi oi-person"></span></Link> 
+                    </li>
+                    <li className={"nav-item" + (this.props.page === "connect" ? " active" : "")}>
+                        <Link className="nav-link" to="/connect">Connect <span className="oi oi-puzzle-piece"></span></Link> 
+                    </li>
+                    <li className={"nav-item" + (this.props.page === "logout" ? " active" : "")}>
+                        <Link className="nav-link" to="/logout">Logout <span className="oi oi-account-logout"></span></Link> 
+                    </li>
+                </ul>
             </nav> 
         );
     }

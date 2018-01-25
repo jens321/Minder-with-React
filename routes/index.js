@@ -34,9 +34,8 @@ router.post('/api/signup', function(req, res, next) {
 }); 
 
 router.patch('/api/user/:id', function(req, res, next) {
-  body = req.body
-
-  if (body.image) { 
+  body = req.body; 
+  if (body.image) {  
     let buffer = new Buffer(body.image, 'base64');
     fs.writeFileSync(`${__dirname}/../client/public/images/profile/${req.params.id}.png`, buffer);
     body.imageUrlPath = `/images/profile/${req.params.id}.png`; 
