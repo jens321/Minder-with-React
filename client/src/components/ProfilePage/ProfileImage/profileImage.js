@@ -1,6 +1,5 @@
 import React, { Component } from 'react'; 
-import Button from '../../Button/button'; 
-import axios from 'axios';  
+import Button from '../../Button/button';   
 import './profileImage.css'; 
 
 class ProfileImage extends Component {
@@ -102,24 +101,17 @@ class ProfileImage extends Component {
 
         let xhr = new XMLHttpRequest();
         xhr.open('PATCH', `/api/user/${this.props.id}`, true);
+        xhr.setRequestHeader("Content-type", "application/json");
 
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = () => {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                console.log(xhr); 
+                let response = JSON.parse(xhr.responseText); 
+                this.setState({ savedImage: response.imageUrlPath });
+                this.props.updateUser({ imageUrlPath: response.imageUrlPath }); 
             }
         }
 
-        xhr.send({ image: this.state.currentImage }); 
-        // axios.patch(`/api/user/${this.props.id}`, { image: this.state.currentImage })
-        //     .then(function(response) {
-        //         that.setState({ savedImage: response.data.imageUrlPath }); 
-        //         that.props.updateUser({ imageUrlPath: response.data.imageUrlPath });
-        //     })
-        //     .catch(function(err) {
-        //         console.log(err); 
-        //     });  
+        xhr.send(JSON.stringify({ image: this.state.currentImage })); 
     }
 
     render() {

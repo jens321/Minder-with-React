@@ -34,20 +34,26 @@ router.post('/api/signup', function(req, res, next) {
 }); 
 
 router.patch('/api/user/:id', function(req, res, next) {
-  body = req.body; 
-  if (body.image) {  
+  let body = req.body;   
+  if (body.image) { 
+    // does not refresh when calling Math.random() 
+    // change to store in aws s3, also use multi part form data and multer to parse it 
+    let path = `${__dirname}/../client/public/images/profile/${req.params.id}.png`; 
     let buffer = new Buffer(body.image, 'base64');
-    fs.writeFileSync(`${__dirname}/../client/public/images/profile/${req.params.id}.png`, buffer);
-    body.imageUrlPath = `/images/profile/${req.params.id}.png`; 
-    delete body.image; 
+    if (fs.existsSync(path)) {
+      console.log('got here'); 
+      fs.unlinkSync(path); 
+    }
+    fs.writeFileSync(path, buffer); 
+    body.imageUrlPath = `/images/profile/${req.params.id}.png`;
+    res.json({ "name": "Jens" }); 
   } 
-
-  delete body.editable; 
-  User.findByIdAndUpdate(mongoose.Types.ObjectId(req.params.id), body, {new: true}, function(err, newUser) {
-    if (err) throw err; 
-    delete newUser.password; 
-    res.status(200).json(newUser); 
-  }); 
+  // delete body.editable; 
+  // User.findByIdAndUpdate(mongoose.Types.ObjectId(req.params.id), body, {new: true}, function(err, newUser) {
+  //   if (err) throw err; 
+  //   delete newUser.password; 
+  //   res.status(200).json(newUser); 
+  // }); 
 
 });
 
