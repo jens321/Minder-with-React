@@ -36,18 +36,18 @@ router.post('/api/signup', function(req, res, next) {
 router.patch('/api/user/:id', function(req, res, next) {
   let body = req.body;   
   if (body.image) { 
-    // does not refresh when calling Math.random() 
-    // change to store in aws s3, also use multi part form data and multer to parse it 
     let path = `${__dirname}/../client/public/images/profile/${req.params.id}.png`; 
     let buffer = new Buffer(body.image, 'base64');
     if (fs.existsSync(path)) {
-      console.log('got here'); 
       fs.unlinkSync(path); 
     }
-    fs.writeFileSync(path, buffer); 
-    body.imageUrlPath = `/images/profile/${req.params.id}.png`;
-    res.json({ "name": "Jens" }); 
+    fs.writeFile(path, buffer, (err) => {
+      if(err) throw err; 
+      body.imageUrlPath = `/images/profile/${req.params.id}.png`;
+      res.json(body); 
+    }); 
   } 
+
   // delete body.editable; 
   // User.findByIdAndUpdate(mongoose.Types.ObjectId(req.params.id), body, {new: true}, function(err, newUser) {
   //   if (err) throw err; 

@@ -12,7 +12,7 @@ class ProfileImage extends Component {
 
         this.state = {
             savedImage: '/images/profile.jpg',
-            currentImage: '/images/profile.jpg',
+            currentImage: '',
             modalIsOpen: false
         }
 
@@ -74,8 +74,7 @@ class ProfileImage extends Component {
             context.drawImage(this.video, 0, 0, this.width, this.height); 
 
             let data = this.canvas.toDataURL('image/png'); 
-            this.setState({ currentImage: data.split(',')[1]})
-            this.photo.setAttribute('src', data); 
+            this.setState({ currentImage: data})
         } else {
             this.clearPhoto(); 
         }
@@ -87,7 +86,7 @@ class ProfileImage extends Component {
         context.fillRect(0, 0, this.canvas.width, this.canvas.height); 
 
         let data = this.canvas.toDataURL('image/png');
-        this.photo.setAttribute('src', data); 
+        this.setState({ currentImage: data }); 
     }
 
     handleDiscardModal() {
@@ -111,7 +110,7 @@ class ProfileImage extends Component {
             }
         }
 
-        xhr.send(JSON.stringify({ image: this.state.currentImage })); 
+        xhr.send(JSON.stringify({ image: this.state.currentImage.split(',')[1] })); 
     }
 
     render() {
@@ -130,7 +129,7 @@ class ProfileImage extends Component {
                         <canvas id="canvas" ref={(input) => { this.canvas = input; }}>
                         </canvas>
                         <div className="output">
-                            <img id="photo" alt="The screen will appear in this box." ref={(input) => { this.photo = input; }}/>
+                            <img id="photo" alt="The screen will appear in this box." ref={(input) => { this.photo = input; }} src={this.state.currentImage} />
                         </div> 
                     </div>
                     <div className="modal-footer">
