@@ -4,7 +4,8 @@ import ProfileImage from './profileImage';
 
 const mapStateToProps = state => {
     return {
-        id: state._id
+        id: state._id,
+        imageUrlPath: state.imageUrlPath
     }
 }
 

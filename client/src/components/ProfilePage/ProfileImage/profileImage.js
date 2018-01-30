@@ -11,7 +11,7 @@ class ProfileImage extends Component {
         this.streaming = false; 
 
         this.state = {
-            savedImage: '/images/profile.jpg',
+            savedImage: '/images/profile/profile.jpg',
             currentImage: '',
             modalIsOpen: false
         }
@@ -106,6 +106,7 @@ class ProfileImage extends Component {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 let response = JSON.parse(xhr.responseText); 
                 this.setState({ savedImage: response.imageUrlPath });
+                this.setState({ currentImage: response.imageUrlPath }); 
                 this.props.updateUser({ imageUrlPath: response.imageUrlPath }); 
             }
         }

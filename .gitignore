@@ -1,2 +1,4 @@
 node_modules/
 .env 
+public/images/profile/*.png
+client/node_modules/
