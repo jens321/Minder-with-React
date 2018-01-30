@@ -66,7 +66,7 @@ let saveProfileImage = (image, id) => {
   }
 
   fs.writeFileSync(path, buffer); 
-  return `/images/profile/${req.params.id}.png?key=${new Date()}`;; 
+  return `/images/profile/${id}.png?key=${new Date()}`;; 
 }
 
 module.exports = router;

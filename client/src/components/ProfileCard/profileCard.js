@@ -113,6 +113,10 @@ class ProfileCard extends Component {
             }); 
         }
     }
+
+    handleTagDelete(e) {
+        console.log(e.currentTarget.textContent.slice(0,-1));  
+    }
     
     render() {
         return (
@@ -123,7 +127,7 @@ class ProfileCard extends Component {
                         <ProfileCardItem title="Email" data={this.state.email} isEditable={this.props.editable} onDataChange={this.onEmailChange}/> 
                     </li>
                     <li className="list-group-item">
-                        <TagList title="Tags" isEditable={this.props.editable} tags={this.state.tags} currentTag={this.state.currentTag} onTagChange={this.handleTagChange} onTagKeyUp={this.handleTagKeyUp}/>
+                        <TagList title="Tags" isEditable={this.props.editable} tags={this.state.tags} currentTag={this.state.currentTag} onTagChange={this.handleTagChange} onTagKeyUp={this.handleTagKeyUp} handleTagDelete={this.handleTagDelete}/>
                     </li>
                     <li className="list-group-item">
                         <ProfileCardItem title="Education" data={this.state.education} isEditable={this.props.editable} onDataChange={this.onEducationChange}/>
