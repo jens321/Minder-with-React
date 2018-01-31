@@ -2,8 +2,25 @@ import React, { Component } from 'react';
 import NavBar from '../NavBar/navbar';
 import SearchBar from './SearchBar/searchBar'; 
 import ProfileCardHeader from '../ProfileCard/ProfileCardHeader/profileCardHeader'; 
+import axios from 'axios'; 
 
 class DiscoveryPage extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {}; 
+    }
+
+    componentDidMount() {
+        axios.get(`/api/similar/${this.props.id}`)
+            .then(function(response) {
+                console.log(response); 
+            })
+            .catch(function(error) {
+                console.log(error); 
+            });
+    }
+
     render() {
         return (
             <div>

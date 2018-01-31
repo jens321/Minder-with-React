@@ -36,7 +36,12 @@ class ProfileCard extends Component {
         // initiliaze data coming from redux store
         this.setState({
             name: newProps.name,
-            email: newProps.email
+            description: newProps.description,
+            src: newProps.imageUrlPath,
+            email: newProps.email,
+            tags: newProps.tags,
+            education: newProps.education,
+            location: newProps.location
         });
     }
 

@@ -35,6 +35,21 @@ router.post('/api/signup', function(req, res, next) {
 
 }); 
 
+// ------------------ USER LOGIN -------------------
+
+router.post('/api/login', function(req, res, next) {
+  User.findOne({ email: req.body.email }, function(err, user) {
+    if (err) throw err;
+    if (!user) return res.send('User does not exist. Please try again'); 
+    if (user.checkPassword(req.body.password)) { 
+      user.password = undefined; 
+      return res.json(user); 
+    } else {
+      return res.send('Invalid password. Please try again.'); 
+    }
+  })
+});
+
 // ------------------- UPDATE USER --------------------
 
 router.patch('/api/user/:id', function(req, res, next) {
@@ -53,6 +68,22 @@ router.patch('/api/user/:id', function(req, res, next) {
       res.status(200).json(newUser); 
     });
   } 
+});
+
+// ------------------- SIMILAR TO USER --------------------
+
+router.get('/api/similar/:id', function(req, res, next) {
+  User.findById(req.params.id, function (err, user) {
+    User.find({ tags: { $in: user.tags }, _id: { $nin: [user._id] } })
+      .select('-password')
+      .then(function(data) {
+        console.log(data);
+        res.json(data); 
+      })
+      .catch(function(err) {
+        console.log(err); 
+      })
+  });
 });
 
 // ---------------- HELPER FUNCTIONS ------------------

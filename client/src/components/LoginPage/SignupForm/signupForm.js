@@ -8,9 +8,9 @@ class SignupForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "Jens Tuyls",
-            email: "jens.tuyls@icloud.com",
-            password: "test",
+            name: "",
+            email: "",
+            password: "",
             redirectToProfile: false,
             error: ""
         }

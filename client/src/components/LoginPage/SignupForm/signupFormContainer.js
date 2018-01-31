@@ -11,6 +11,6 @@ const mapDispatchToProps = dispatch => {
 const SignupFormContainer = connect(
     null, 
     mapDispatchToProps
-)(SignupForm)
+)(SignupForm); 
 
 export default SignupFormContainer; 

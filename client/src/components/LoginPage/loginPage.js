@@ -1,7 +1,7 @@
 import React, { Component } from 'react'; 
 import './loginPage.css'; 
 import SignupFormContainer from './SignupForm/signupFormContainer'; 
-import LoginForm from './LoginForm/loginForm'; 
+import LoginFormContainer from './LoginForm/loginFormContainer'; 
 
 class LoginPage extends Component {
     render() {
@@ -12,7 +12,7 @@ class LoginPage extends Component {
                     <div className="offset-md-3 col-md-6">
                         <SignupFormContainer />
                         <hr /> 
-                        <LoginForm />
+                        <LoginFormContainer />
                     </div>
                 </div> 
             </div> 
