@@ -27,8 +27,9 @@ class ProfileCard extends Component {
         this.onTagsChange = this.onTagsChange.bind(this);
         this.handleTagChange = this.handleTagChange.bind(this);
         this.handleTagKeyUp = this.handleTagKeyUp.bind(this); 
+        this.handleTagDelete = this.handleTagDelete.bind(this); 
         this.onEducationChange = this.onEducationChange.bind(this);
-        this.onLocationChange = this.onLocationChange.bind(this); 
+        this.onLocationChange = this.onLocationChange.bind(this);
     }
 
     componentWillReceiveProps(newProps) {
@@ -108,14 +109,20 @@ class ProfileCard extends Component {
     handleTagKeyUp(e) {
         if (e.keyCode === 13) {
             this.setState({
-                tags: this.state.tags.concat([this.state.currentTag]),
+                tags: this.state.tags.concat([this.state.currentTag.trim()]),
                 currentTag: ""
             }); 
         }
     }
 
     handleTagDelete(e) {
-        console.log(e.currentTarget.textContent.slice(0,-1));  
+        let value = e.currentTarget.textContent.slice(0,-1).trim(); 
+        let index = this.state.tags.indexOf(value);   
+        let tags = this.state.tags.slice(); 
+        tags.splice(index, 1); 
+        this.setState({
+            tags: tags
+        })
     }
     
     render() {
