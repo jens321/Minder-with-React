@@ -30,7 +30,12 @@ router.post('/api/signup', function(req, res, next) {
   user.save(function(err, user) {
     if (err) throw err;  
     delete user.password;
-    res.send(user); 
+
+    let token = auth.generateToken(user); 
+    res.json({
+      user: user,
+      token: token
+    }); 
   });
 
 }); 
@@ -43,11 +48,35 @@ router.post('/api/login', function(req, res, next) {
     if (!user) return res.send('User does not exist. Please try again'); 
     if (user.checkPassword(req.body.password)) { 
       user.password = undefined; 
-      return res.json(user); 
+
+      let token = auth.generateToken(user);
+      return res.json({
+        user: user,
+        token: token
+      }); 
     } else {
       return res.send('Invalid password. Please try again.'); 
     }
   })
+});
+
+app.use(function(req, res, next) {
+  let token = req.headers['authorization'];
+  if (!token) return next();
+
+  token = token.replace('Bearer ', '');
+
+  jwt.verify(token, process.env.JWT_SECRET, function(err, user) {
+    if (err) {
+      return res.status(401).json({
+        success: false,
+        message: "Token invalid"
+      });
+    } else {
+      req.user = user;
+      next(); 
+    }
+  });
 });
 
 // ------------------- UPDATE USER --------------------
