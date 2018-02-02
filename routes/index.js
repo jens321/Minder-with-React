@@ -31,11 +31,11 @@ router.post('/api/signup', function(req, res, next) {
     if (err) throw err;  
     delete user.password;
 
+    // generate token and store in cookie
     let token = auth.generateToken(user); 
-    res.json({
-      user: user,
-      token: token
-    }); 
+    req.session.token = token; 
+
+    return res.json(user);  
   });
 
 }); 
@@ -49,39 +49,20 @@ router.post('/api/login', function(req, res, next) {
     if (user.checkPassword(req.body.password)) { 
       user.password = undefined; 
 
+      // generate token and store in cookie 
       let token = auth.generateToken(user);
-      return res.json({
-        user: user,
-        token: token
-      }); 
+      req.session.token = token; 
+
+      return res.json(user);  
     } else {
       return res.send('Invalid password. Please try again.'); 
     }
   })
 });
 
-app.use(function(req, res, next) {
-  let token = req.headers['authorization'];
-  if (!token) return next();
-
-  token = token.replace('Bearer ', '');
-
-  jwt.verify(token, process.env.JWT_SECRET, function(err, user) {
-    if (err) {
-      return res.status(401).json({
-        success: false,
-        message: "Token invalid"
-      });
-    } else {
-      req.user = user;
-      next(); 
-    }
-  });
-});
-
 // ------------------- UPDATE USER --------------------
 
-router.patch('/api/user/:id', function(req, res, next) {
+router.patch('/api/user/:id', auth.requireToken, function(req, res, next) {
   let body = req.body;   
   if (body.image) { 
     let path = saveProfileImage(body.image, req.params.id); 
@@ -101,7 +82,7 @@ router.patch('/api/user/:id', function(req, res, next) {
 
 // ------------------- SIMILAR TO USER --------------------
 
-router.get('/api/similar/:id', function(req, res, next) {
+router.get('/api/similar/:id', auth.requireToken, function(req, res, next) {
   User.findById(req.params.id, function (err, user) {
     User.find({ tags: { $in: user.tags }, _id: { $nin: [user._id] } })
       .select('-password')
@@ -126,7 +107,7 @@ let saveProfileImage = (image, id) => {
   }
 
   fs.writeFileSync(path, buffer); 
-  return `/images/profile/${id}.png?key=${new Date()}`;; 
+  return `/images/profile/${id}.png?key=${new Date()}`;
 }
 
-module.exports = router;
+module.exports = router; 

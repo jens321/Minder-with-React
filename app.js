@@ -5,8 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 let mongoose = require('mongoose'); 
+let session = require('client-sessions'); 
 
-var index = require('./routes/index');
+let index = require('./routes/index');
 
 var app = express();
 
@@ -26,9 +27,20 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 app.use(cookieParser());
 
+app.use(session({
+  cookieName: 'session',
+  secret: 'OAlixzTNjmKq0eY26T9w',
+  duration: 60 * 60 * 24,
+  activeDuration: 5 * 60 * 1000,
+  httpOnly: true,
+  secure: true,
+  ephemeral: true 
+})); 
+
 app.use(express.static(__dirname + '/public')); 
 
 app.use('/', index);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

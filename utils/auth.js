@@ -1,4 +1,5 @@
 let jwt = require('jsonwebtoken');
+require('dotenv').load(); 
 
 const generateToken = (user) => {
     let newUser = {
@@ -20,4 +21,27 @@ const generateToken = (user) => {
     let token = jwt.sign(newUser, process.env.JWT_SECRET, {
         expiresIn: 60 * 60 * 24
     });
+    return token; 
 }
+
+const requireToken = (req, res, next) => {
+    if (req.session && req.session.token) {
+      let token = req.session.token;
+      jwt.verify(token, process.env.JWT_SECRET, function(err, user) {
+        if (err) {
+          return res.status(401).json({
+            success: false,
+            message: "Token invalid"
+          });
+        } else {
+          // req.user = user;
+          next(); 
+        }
+      }); 
+    }
+  }
+
+  module.exports = {
+    generateToken: generateToken,
+    requireToken: requireToken
+  }

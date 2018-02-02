@@ -61,6 +61,8 @@ class ProfileCard extends Component {
 
                     // update redux store
                     that.props.updateUser(response.data); 
+                } else if(response.status == 401) {
+                    // redirect to login page 
                 }
             })
             .catch(function(error) {
