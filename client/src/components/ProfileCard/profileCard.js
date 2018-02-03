@@ -61,12 +61,10 @@ class ProfileCard extends Component {
 
                     // update redux store
                     that.props.updateUser(response.data); 
-                } else if(response.status == 401) {
-                    // redirect to login page 
                 }
             })
-            .catch(function(error) {
-                console.log(error); 
+            .catch((error) => {
+                this.props.logout(); 
             });
         this.props.handleSave(); 
     }
@@ -152,11 +150,11 @@ class ProfileCard extends Component {
                 </ul> 
                 <div className="card-body">
                     { this.props.editable 
-                     ? <Button text="Save Changes" handler={this.handleSave}/> 
-                     : <Button text="Edit Profile" handler={this.props.handleEdit}/> }
+                        ? <Button text="Save Changes" handler={this.handleSave}/> 
+                        : <Button text="Edit Profile" handler={this.props.handleEdit}/> }
                 </div> 
             </div> 
-        ); 
+        );
     }
 }
 

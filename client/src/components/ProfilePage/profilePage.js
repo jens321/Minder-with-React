@@ -1,4 +1,5 @@
 import React, { Component } from 'react'; 
+import { Redirect } from 'react-router-dom'; 
 import NavBar from '../NavBar/navbar';
 import ProfileCardContainer from '../ProfileCard/profileCardContainer'; 
 import ProfileImageContainer from './ProfileImage/profileImageContainer';
@@ -14,6 +15,11 @@ class ProfilePage extends Component {
 
         this.handleEdit = this.handleEdit.bind(this);
         this.handleSave = this.handleSave.bind(this); 
+        this.logout = this.logout.bind(this); 
+    }
+
+    logout() {
+        
     }
 
     handleEdit() {
@@ -36,21 +42,26 @@ class ProfilePage extends Component {
     }
 
     render() {
-        return (
-            <div> 
-                <NavBar page="profile"/>
-                <div className="container">
-                    <div className="row">
-                        <div className="offset-md-2 col-md-8">
-                            <ProfileImageContainer editable={this.state.editable} />
-                            <ProfileCardContainer editable={this.state.editable} 
-                                                  handleEdit={this.handleEdit} 
-                                                  handleSave={this.handleSave} /> 
+        if (this.state.loggedIn) {
+            return (
+                <div> 
+                    <NavBar page="profile" logout={this.logout}/>
+                    <div className="container">
+                        <div className="row">
+                            <div className="offset-md-2 col-md-8">
+                                <ProfileImageContainer editable={this.state.editable} />
+                                <ProfileCardContainer editable={this.state.editable} 
+                                                      handleEdit={this.handleEdit} 
+                                                      handleSave={this.handleSave}
+                                                      logout={this.logout} /> 
+                            </div> 
                         </div> 
                     </div> 
                 </div> 
-            </div> 
-        );
+            );
+        } else {
+            return <Redirect to={{ pathname: '/'}} />; 
+        }
     }
 }
 

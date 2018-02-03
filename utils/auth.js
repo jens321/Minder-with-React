@@ -19,7 +19,7 @@ const generateToken = (user) => {
     }
 
     let token = jwt.sign(newUser, process.env.JWT_SECRET, {
-        expiresIn: 60 * 60 * 24
+        expiresIn: 2//60 * 60 * 24
     });
     return token; 
 }

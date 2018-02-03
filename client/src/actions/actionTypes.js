@@ -5,6 +5,7 @@
 export const SIGNUP = 'SIGNUP';
 export const LOGIN = 'LOGIN'; 
 export const UPDATE_USER = 'UPDATE_USER'; 
+export const LOGOUT = 'LOGOUT'; 
 
 /*
  * other constants
@@ -34,5 +35,11 @@ export function login(data) {
     return {
         type: LOGIN,
         data 
+    }
+}
+
+export function logout() {
+    return {
+        type: LOGOUT
     }
 }

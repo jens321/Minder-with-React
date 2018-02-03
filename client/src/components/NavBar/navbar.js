@@ -3,6 +3,16 @@ import { Link } from 'react-router-dom';
 import './navbar.css'; 
 
 class NavBar extends Component {
+    constructor(props) {
+        super(props);
+
+        this.handleLogout = this.handleLogout.bind(this);
+    }
+
+    handleLogout() {
+        this.props.logout(); 
+    }
+
     render () { 
         return (
             <nav className="navbar navbar-expand-lg navbar-light">
@@ -21,7 +31,7 @@ class NavBar extends Component {
                         <Link className="nav-link" to="/connect">Connect <span className="oi oi-puzzle-piece"></span></Link> 
                     </li>
                     <li className={"nav-item" + (this.props.page === "logout" ? " active" : "")}>
-                        <Link className="nav-link" to="/logout">Logout <span className="oi oi-account-logout"></span></Link> 
+                        <Link className="nav-link" to="/logout" onClick={this.handleLogout}>Logout <span className="oi oi-account-logout"></span></Link> 
                     </li>
                 </ul>
             </nav> 

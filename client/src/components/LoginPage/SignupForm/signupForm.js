@@ -11,7 +11,7 @@ class SignupForm extends Component {
             name: "",
             email: "",
             password: "",
-            redirectToProfile: false,
+            loggedIn: false,
             error: ""
         }
 
@@ -39,7 +39,7 @@ class SignupForm extends Component {
                 that.setState({
                     name: response.data.name,
                     email: response.data.email,
-                    redirectToProfile: true 
+                    loggedIn: true 
                 }); 
                 // update the redux store 
                 that.props.signup(response.data);
@@ -72,7 +72,7 @@ class SignupForm extends Component {
     }
 
     render() {
-        if (!this.state.redirectToProfile) {
+        if (!this.state.loggedIn) {
             return (
                 <form id="signup-form">
                     <h2>Signup</h2> 
@@ -84,7 +84,7 @@ class SignupForm extends Component {
                 </form> 
             );
         } else {
-            return <Redirect to={{ pathname: '/profile', state: this.state }} />; 
+            return <Redirect to={{ pathname: '/profile'}} />; 
         }
     }
 }

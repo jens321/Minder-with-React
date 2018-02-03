@@ -40,8 +40,6 @@ class LoginForm extends Component {
                     redirectToProfile: true
                 });
 
-                console.log(response.data); 
-
                 this.props.login(response.data); 
             } else {
                 this.handleSignupError("Sorry, something went wrong during registration.");
