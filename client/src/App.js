@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom'; 
-import LoginPage from './components/LoginPage/loginPage'; 
+import LoginPageContainer from './components/LoginPage/loginPageContainer'; 
 import DiscoveryPageContainer from './components/DiscoveryPage/discoveryPageContainer'; 
 import ChatPage from './components/ChatPage/chatPage';
 import ProfilePage from './components/ProfilePage/profilePage';
@@ -13,41 +13,28 @@ class App extends Component {
     this.state = {
       loggedIn: false
     }
-
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
   }
 
-  login(user) {
-    this.setState({ loggedIn: true });
-
-    // update redux store
-    this.props.login(user)
-  }
-
-  logout() {
-    this.setState({ loggedIn: false });
-
-    // update redux store
-    this.props.logout(); 
+  componentWillReceiveProps(newProps) {
+    this.setState({ loggedIn: newProps.loggedIn }); 
   }
 
   render() {
     if (this.state.loggedIn) {
       return (
         <Switch>
-          <Route exact path="/" component={LoginPage} />
+          <Route exact path="/" component={LoginPageContainer} />
           <Route exact path="/discovery" component={DiscoveryPageContainer} />
           <Route exact path="/chat" component={ChatPage} />
           <Route exact path="/profile" component={ProfilePage} />
           <Route exact path="/connect" component={ConnectPage} />
-          <Route exact path="/logout" component={LoginPage} />
+          <Route exact path="/logout" component={LoginPageContainer} />
         </Switch> 
-      ); 
+      );
     } else {
       return (
         <Switch>
-          <Route path="/" component={LoginPage}/>
+          <Route path="/" component={LoginPageContainer} />
         </Switch>
       );
     }

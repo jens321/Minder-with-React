@@ -4,7 +4,7 @@ import SignupForm from './signupForm';
 
 const mapDispatchToProps = dispatch => {
     return {
-        signup: (data) => { dispatch(signup(data)) }
+        signup: (data) => dispatch(signup(data))
     }
 }
 

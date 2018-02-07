@@ -60,6 +60,13 @@ router.post('/api/login', function(req, res, next) {
   })
 });
 
+// ------------------ USER LOGOUT ------------------- 
+
+router.post('/api/logout', function(req, res, next) {
+  req.session.reset(); 
+  return res.redirect('/'); 
+});
+
 // ------------------- UPDATE USER --------------------
 
 router.patch('/api/user/:id', auth.requireToken, function(req, res, next) {

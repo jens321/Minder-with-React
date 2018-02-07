@@ -3,21 +3,20 @@ import ProfileCardItem from './ProfileCardItem/profileCardItem';
 import ProfileCardHeader from './ProfileCardHeader/profileCardHeader'; 
 import Button from '../Button/button'; 
 import TagList from '../TagList/tagList'; 
-import axios from 'axios'; 
 import './profileCard.css';
 
 class ProfileCard extends Component {
     constructor(props) {
         super(props); 
         this.state = {
-            name: "",
-            description: "",
-            src: "",
-            email: "",
+            name: this.props.name,
+            description: this.props.description,
+            src: this.props.src,
+            email: this.props.email,
             tags: this.props.tags ? this.props.tags : [],
             currentTag: "",
-            education: "",
-            location: ""
+            education: this.props.education,
+            location: this.props.location  
         };
   
         this.handleSave = this.handleSave.bind(this);
@@ -32,40 +31,8 @@ class ProfileCard extends Component {
         this.onLocationChange = this.onLocationChange.bind(this);
     }
 
-    componentWillReceiveProps(newProps) {
-        // initiliaze data coming from redux store
-        this.setState({
-            name: newProps.name,
-            description: newProps.description,
-            src: newProps.imageUrlPath,
-            email: newProps.email,
-            tags: newProps.tags,
-            education: newProps.education,
-            location: newProps.location
-        });
-    }
-
     handleSave() {
-        let that = this; 
-        axios.patch(`/api/user/${this.props.id}`, this.state)
-            .then(function(response) {
-                if (response.status === 200) {
-                    that.setState({
-                        name: response.data.name,
-                        description: response.data.description,
-                        email: response.data.email,
-                        tags: response.data.tags,
-                        education: response.data.education,
-                        location: response.data.location
-                    });
-
-                    // update redux store
-                    that.props.updateUser(response.data); 
-                }
-            })
-            .catch((error) => {
-                this.props.logout(); 
-            });
+        this.props.updateUser(this.state, this.props.id); 
         this.props.handleSave(); 
     }
 

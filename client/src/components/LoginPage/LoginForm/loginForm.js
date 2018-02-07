@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'; 
 import TextField from '../../textfield/textfield'; 
 import Button from '../../Button/button';
-import axios from 'axios';
 
 class LoginForm extends Component {
     constructor(props) {
@@ -11,7 +9,6 @@ class LoginForm extends Component {
         this.state = {
             email: "",
             password: "",
-            redirectToProfile: false,
             error: ""
         }
 
@@ -28,26 +25,10 @@ class LoginForm extends Component {
     }
 
     handleLogin() {
-        axios.post('/api/login', {
+        this.props.login({
             email: this.state.email,
             password: this.state.password 
-        })
-        .then((response) => {
-            if (response.status === 200) {
-                this.setState({
-                    email: response.data.email,
-                    password: response.data.password,
-                    redirectToProfile: true
-                });
-
-                this.props.login(response.data); 
-            } else {
-                this.handleSignupError("Sorry, something went wrong during registration.");
-            }
-        })
-        .catch(function(err) {
-            console.log(err); 
-        })
+        }); 
     }
 
     onEmailChange(newEmail) {
@@ -63,19 +44,15 @@ class LoginForm extends Component {
     }
 
     render() {
-        if (!this.state.redirectToProfile) {
-            return (
-                <form>
-                    <h2>Login</h2> 
-                    <TextField label="Email" type="email" placeholder="Please enter your email" onDataChange={ this.onEmailChange } />
-                    <TextField label="Password" type="password" placeholder="Please enter your password" onDataChange={ this.onPasswordChange } /> 
-                    <Button text="Login" handler={ this.handleLogin } /> 
-                    { this.state.error ? <div className="alert alert-danger">{this.state.error}</div> : false }
-                </form> 
-            );
-        } else {
-            return <Redirect to={{ pathname: '/profile'}} />;
-        }
+        return (
+            <form>
+                <h2>Login</h2> 
+                <TextField label="Email" type="email" placeholder="Please enter your email" onDataChange={ this.onEmailChange } />
+                <TextField label="Password" type="password" placeholder="Please enter your password" onDataChange={ this.onPasswordChange } /> 
+                <Button text="Login" handler={ this.handleLogin } /> 
+                { this.state.error ? <div className="alert alert-danger">{this.state.error}</div> : false }
+            </form> 
+        );
     }
 }
 

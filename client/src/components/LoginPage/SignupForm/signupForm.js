@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import TextField from '../../textfield/textfield'; 
 import Button from '../../Button/button';
-import axios from 'axios'; 
 
 class SignupForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
-            email: "",
-            password: "",
-            loggedIn: false,
+            name: "Jens Tuyls",
+            email: "jens.tuyls@icloud.com",
+            password: "test",
             error: ""
         }
 
@@ -27,30 +24,11 @@ class SignupForm extends Component {
     }
 
     handleSignup() {
-        let that = this; 
-        axios.post('/api/signup', {
-            name: this.state.name,
-            email: this.state.email,
-            password: this.state.password
-        })
-        .then(function(response) {
-            if (response.status === 200) {
-                // set the component state 
-                that.setState({
-                    name: response.data.name,
-                    email: response.data.email,
-                    loggedIn: true 
-                }); 
-                // update the redux store 
-                that.props.signup(response.data);
-            } else {
-                this.handleSignupError("Sorry, something went wrong during registration."); 
-            }
-        })
-        .catch(function(error) {
-            console.log(error);
-            that.handleSignupError("Sorry, something went wrong during registration."); 
-        }); 
+        this.props.signup(
+            { name: this.state.name, 
+              email: this.state.email, 
+              password: this.state.password
+        });  
     }
 
     onNameChange(newName) {
@@ -72,20 +50,16 @@ class SignupForm extends Component {
     }
 
     render() {
-        if (!this.state.loggedIn) {
-            return (
-                <form id="signup-form">
-                    <h2>Signup</h2> 
-                    <TextField label="Name" text={this.state.name} placeholder="Please enter your name" type="text" onDataChange={this.onNameChange} />
-                    <TextField label="Email" text={this.state.email} placeholder="Please enter your email" type="email" onDataChange={this.onEmailChange}/> 
-                    <TextField label="Password" text={this.state.password} placeholder="Please enter your password" type="password" onDataChange={this.onPasswordChange}/> 
-                    <Button text="Submit" handler={this.handleSignup}/><br /><br />
-                    { this.state.error ? <div className="alert alert-danger">{this.state.error}</div> : false }
-                </form> 
-            );
-        } else {
-            return <Redirect to={{ pathname: '/profile'}} />; 
-        }
+        return (
+            <form id="signup-form">
+                <h2>Signup</h2> 
+                <TextField label="Name" text={this.state.name} placeholder="Please enter your name" type="text" onDataChange={this.onNameChange} />
+                <TextField label="Email" text={this.state.email} placeholder="Please enter your email" type="email" onDataChange={this.onEmailChange}/> 
+                <TextField label="Password" text={this.state.password} placeholder="Please enter your password" type="password" onDataChange={this.onPasswordChange}/> 
+                <Button text="Submit" handler={this.handleSignup}/><br /><br />
+                { this.state.error ? <div className="alert alert-danger">{this.state.error}</div> : false }
+            </form> 
+        );
     }
 }
 
