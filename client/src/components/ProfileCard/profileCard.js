@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ProfileCardItem from './ProfileCardItem/profileCardItem'; 
 import ProfileCardHeader from './ProfileCardHeader/profileCardHeader'; 
 import Button from '../Button/button'; 
+import LocationMap from './LocationMap/locationMap'; 
 import TagList from '../TagList/tagList'; 
 import './profileCard.css';
 
@@ -113,6 +114,7 @@ class ProfileCard extends Component {
                     </li>
                     <li className="list-group-item">
                         <ProfileCardItem title="Location" data={this.state.location} isEditable={this.props.editable} onDataChange={this.onLocationChange}/>
+                        <LocationMap />
                     </li> 
                 </ul> 
                 <div className="card-body">
