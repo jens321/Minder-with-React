@@ -94,10 +94,10 @@ export function updateUserFailure(error) {
 export function updateUser(data, id) {
     return function(dispatch) {
         dispatch(updateUserRequest(data));
-        axios.patch(`/api/user/${id}`, {
+        return axios.patch(`/api/user/${id}`, {
             name: data.name,
             description: data.description,
-            src: data.src,
+            image: data.imageUrlPath,
             email: data.email,
             tags: data.tags,
             education: data.education,
@@ -137,7 +137,7 @@ export function loginFailure(error) {
 export function login(data) {
     return function(dispatch) {
         dispatch(loginRequest(data)); 
-        axios.post('/api/login', {
+        return axios.post('/api/login', {
             email: data.email,
             password: data.password
         })

@@ -11,7 +11,7 @@ class ProfileCard extends Component {
         this.state = {
             name: this.props.name,
             description: this.props.description,
-            src: this.props.src,
+            src: "",
             email: this.props.email,
             tags: this.props.tags ? this.props.tags : [],
             currentTag: "",

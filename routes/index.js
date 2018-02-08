@@ -22,7 +22,7 @@ router.post('/api/signup', function(req, res, next) {
     connections: [],
     pending: [],
     invitations: [],
-    imageUrlPath: "images/profile.jpg",
+    imageUrlPath: "images/profile/profile.jpg",
     unreadChats: 0,
     unreadConnections: 0
   });
@@ -76,15 +76,13 @@ router.patch('/api/user/:id', auth.requireToken, function(req, res, next) {
     
     // add meaningless query parameter in order for react to update the image
     body.imageUrlPath = path; 
-    res.json(body); 
-  } else {
-    delete body.editable; 
-    User.findByIdAndUpdate(mongoose.Types.ObjectId(req.params.id), body, {new: true}, function(err, newUser) {
-      if (err) throw err; 
-      delete newUser.password; 
-      res.status(200).json(newUser); 
-    });
   } 
+  delete body.editable; 
+  User.findByIdAndUpdate(mongoose.Types.ObjectId(req.params.id), body, {new: true}, function(err, newUser) {
+    if (err) throw err; 
+    delete newUser.password; 
+    res.status(200).json(newUser); 
+  });
 });
 
 // ------------------- SIMILAR TO USER --------------------

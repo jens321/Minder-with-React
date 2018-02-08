@@ -11,7 +11,7 @@ class ProfileImage extends Component {
         this.streaming = false; 
 
         this.state = {
-            savedImage: '/images/profile/profile.jpg',
+            savedImage: this.props.imageUrlPath || '/images/profile/profile.jpg',
             currentImage: '',
             modalIsOpen: false
         }
@@ -98,20 +98,11 @@ class ProfileImage extends Component {
         this.mediaStream.stop(); 
         this.setState({ modalIsOpen: false }); 
 
-        let xhr = new XMLHttpRequest();
-        xhr.open('PATCH', `/api/user/${this.props.id}`, true);
-        xhr.setRequestHeader("Content-type", "application/json");
-
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                let response = JSON.parse(xhr.responseText); 
-                this.setState({ savedImage: response.imageUrlPath });
-                this.setState({ currentImage: response.imageUrlPath }); 
-                this.props.updateUser({ imageUrlPath: response.imageUrlPath }); 
-            }
-        }
-
-        xhr.send(JSON.stringify({ image: this.state.currentImage.split(',')[1] })); 
+        this.props.updateUser({ imageUrlPath: this.state.currentImage.split(',')[1] }, this.props.id)
+            .then(response => {
+                this.setState({ savedImage: response.json.imageUrlPath });
+                this.setState({ currentImage: response.json.imageUrlPath });  
+            });  
     }
 
     render() {

@@ -7,8 +7,8 @@ class LoginForm extends Component {
         super(props);
 
         this.state = {
-            email: "",
-            password: "",
+            email: "jens.tuyls@icloud.com",
+            password: "test",
             error: ""
         }
 
@@ -47,8 +47,8 @@ class LoginForm extends Component {
         return (
             <form>
                 <h2>Login</h2> 
-                <TextField label="Email" type="email" placeholder="Please enter your email" onDataChange={ this.onEmailChange } />
-                <TextField label="Password" type="password" placeholder="Please enter your password" onDataChange={ this.onPasswordChange } /> 
+                <TextField label="Email" text={this.state.email} type="email" placeholder="Please enter your email" onDataChange={ this.onEmailChange } />
+                <TextField label="Password" text={this.state.password} type="password" placeholder="Please enter your password" onDataChange={ this.onPasswordChange } /> 
                 <Button text="Login" handler={ this.handleLogin } /> 
                 { this.state.error ? <div className="alert alert-danger">{this.state.error}</div> : false }
             </form> 
