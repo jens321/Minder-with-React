@@ -19,7 +19,7 @@ const initialState = {
     loginRequest: false,
     signupRequest: false,
     updateUserRequest: false,
-    logoutRequest: false 
+    logoutRequest: false
 }
 
 function rootReducer(state = initialState, action) {
@@ -29,28 +29,28 @@ function rootReducer(state = initialState, action) {
         case SIGNUP_SUCCESS:
             return Object.assign({}, state, action.json, { loggedIn: true, signupRequest: false});
         case SIGNUP_FAILURE:
-            return Object.assign({}, state, { error: action.error }); 
+            return Object.assign({}, state, { errors: { signupError: action.error } }); 
 
         case UPDATE_USER_REQUEST:
             return Object.assign({}, state, { updateUserRequest: true }); 
         case UPDATE_USER_SUCCESS:
             return Object.assign({}, state, action.json, { updateUserRequest: false });
         case UPDATE_USER_FAILURE:
-            return Object.assign({}, state, { error: action.error });
+            return Object.assign({}, state, { errors: { updateUserError: action.error } });
 
         case LOGIN_REQUEST:
             return Object.assign({}, state, { loginRequest: true }); 
         case LOGIN_SUCCESS:
             return Object.assign({}, state, action.json, { loggedIn: true, loginRequest: false }); 
         case LOGIN_FAILURE: 
-            return Object.assign({}, state, { error: action.error }); 
+            return Object.assign({}, state, { errors: { loginError: action.error } }); 
 
         case LOGOUT_REQUEST:
             return Object.assign({}, state, { logoutRequest: true }); 
         case LOGOUT_SUCCESS:
             return Object.assign({}, initialState); 
         case LOGOUT_FAILURE:
-            return Object.assign({}, state, { error: action.error }); 
+            return Object.assign({}, state, { errors: { logoutError: action.error } }); 
         default: 
             return state;
     }

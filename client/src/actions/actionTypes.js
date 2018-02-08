@@ -61,12 +61,9 @@ export function signup(data) {
             password: data.password
         })
         .then(
-            response => response.data,
-            error => dispatch(signupFailure(error))
-        )
-        .then((json) => {
-            return dispatch(signupSuccess(json)); 
-        })
+            response => dispatch(signupSuccess(response.data)),
+            error => dispatch(signupFailure(error.response))
+        ); 
     }
 }
 
@@ -104,12 +101,9 @@ export function updateUser(data, id) {
             location: data.location 
         })
         .then(
-            response => response.data,
-            error => dispatch(updateUserFailure(error))
-        )
-        .then((json) => {
-            return dispatch(updateUserSuccess(json)); 
-        })
+            response => dispatch(updateUserSuccess(response.data)),
+            error => dispatch(updateUserFailure(error.response))
+        ); 
     }
 }
 
@@ -142,12 +136,9 @@ export function login(data) {
             password: data.password
         })
         .then(
-            response => response.data,
-            error => dispatch(loginFailure(error))
-        )
-        .then((json) => {
-            return dispatch(loginSuccess(json)); 
-        })
+            response => dispatch(loginSuccess(response.data)),
+            error => dispatch(loginFailure(error.response))
+        ); 
     }
 }
 
@@ -176,9 +167,8 @@ export function logout() {
 
         return axios.post('/api/logout')
             .then(
-                response => response.data,
-                error => dispatch(logoutFailure(error))
-            )
-            .then((json) => dispatch(logoutSuccess(json))); 
+                response => dispatch(logoutSuccess(response.data)),
+                error => dispatch(logoutFailure(error.response))
+            );
     }
 }

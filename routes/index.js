@@ -45,7 +45,7 @@ router.post('/api/signup', function(req, res, next) {
 router.post('/api/login', function(req, res, next) {
   User.findOne({ email: req.body.email }, function(err, user) {
     if (err) throw err;
-    if (!user) return res.send('User does not exist. Please try again'); 
+    if (!user) return res.status(404).send('User does not exist. Please try again'); 
     if (user.checkPassword(req.body.password)) { 
       user.password = undefined; 
 
